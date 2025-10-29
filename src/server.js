@@ -2,13 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import taskRoutes from './routes/taskRoutes.js';
-import swaggerUi from 'swagger-ui-express';
-import YAML from 'yamljs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,12 +11,6 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-// Load OpenAPI spec
-const swaggerDocument = YAML.load(join(__dirname, '../public/bundled.yaml'));
-
-// Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 // Routes
 app.use('/tasks', taskRoutes);
 
@@ -31,7 +18,6 @@ app.use('/tasks', taskRoutes);
 app.get('/', (req, res) => {
 	res.json({
 		message: 'Task API is running',
-		documentation: '/api-docs',
 	});
 });
 
@@ -53,7 +39,6 @@ app.use((req, res) => {
 
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`);
-	console.log(`API Documentation available at http://localhost:${PORT}/api-docs`);
 });
 
 export default app;
