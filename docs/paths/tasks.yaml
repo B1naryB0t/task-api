@@ -1,0 +1,86 @@
+
+tasks:
+  get:
+    summary: Get all tasks
+    description: Retrieve a list of all tasks
+    tags:
+      - Tasks
+    responses:
+      '200':
+        description: A list of tasks
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas.yaml#/Task'
+  
+  post:
+    summary: Create a new task
+    description: Create a new task with title and completion status
+    tags:
+      - Tasks
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/TaskInput'
+    responses:
+      '201':
+        description: Task created successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/Task'
+      '400':
+        description: Validation error
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/ValidationError'
+
+tasksById:
+  get:
+    summary: Get a task by ID
+    description: Retrieve a single task by its unique ID
+    tags:
+      - Tasks
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the task
+        schema:
+          type: integer
+          minimum: 1
+        example: 1
+    responses:
+      '200':
+        description: Task found
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/Task'
+            example:
+              id: 1
+              title: Buy groceries
+              completed: false
+      '400':
+        description: Validation error (invalid ID format)
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/ValidationError'
+            example:
+              error: Validation failed
+              details:
+                - ID must be a number
+      '404':
+        description: Task not found
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/NotFoundError'
+            example:
+              error: Task not found

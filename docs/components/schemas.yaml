@@ -1,0 +1,61 @@
+Task:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: Unique identifier for the task
+      example: 1
+    title:
+      type: string
+      description: The title of the task
+      example: Buy groceries
+    completed:
+      type: boolean
+      nullable: true
+      description: Whether the task is completed
+      example: false
+  required:
+    - id
+    - title
+
+TaskInput:
+  type: object
+  properties:
+    title:
+      type: string
+      minLength: 3
+      maxLength: 100
+      description: The title of the task (3-100 characters)
+      example: Complete the documentation
+    completed:
+      type: boolean
+      description: Whether the task is completed
+      example: false
+  required:
+    - title
+
+ValidationError:
+  type: object
+  properties:
+    error:
+      type: string
+      example: Validation failed
+    details:
+      type: array
+      items:
+        type: string
+      example:
+        - Title is required
+        - Title must be at least 3 and at most 100 characters
+  required:
+    - error
+    - details
+
+NotFoundError:
+  type: object
+  properties:
+    error:
+      type: string
+      example: Task not found
+  required:
+    - error

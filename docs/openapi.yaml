@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: Task API
+  version: 1.0.0
+  description: A simple API for managing tasks
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+  - url: https://your-app.onrender.com
+    description: Production server
+
+paths:
+  /tasks:
+    $ref: './paths/tasks.yaml#/tasks'
+  /tasks/{id}:
+    $ref: './paths/tasks.yaml#/tasksById'
+
+components:
+  schemas:
+    Task:
+      $ref: './components/schemas.yaml#/Task'
+    TaskInput:
+      $ref: './components/schemas.yaml#/TaskInput'
+    ValidationError:
+      $ref: './components/schemas.yaml#/ValidationError'
+    NotFoundError:
+      $ref: './components/schemas.yaml#/NotFoundError'

@@ -1,0 +1,5 @@
+/tasks:
+  $ref: './tasks.yaml#/tasks'
+
+/tasks/{id}:
+  $ref: './tasks.yaml#/tasksById'
